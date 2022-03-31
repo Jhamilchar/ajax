@@ -66,40 +66,40 @@
 // })();
 
 
-// (() => {
-//     const $fetchAsync = document.getElementById("fetch-async"),
-//         $fragment = document.createDocumentFragment();
+(() => {
+    const $fetchAsync = document.getElementById("fetch-async"),
+        $fragment = document.createDocumentFragment();
 
-//     async function getData() {
-//         try {
-//         let res = await fetch("https://jsonplacaeholder.typicode.com/users"),
-//         json = await res.json();
+    async function getData() {
+        try {
+        let res = await fetch("https://jsonplacaeholder.typicode.com/users"),
+        json = await res.json();
 
-//         console.log(res, json);
+        console.log(res, json);
 
-//         // if(!res.ok) throw new Error("Ocurrio un error");
-//         if(!res.ok) throw { status: res.status, statusText: res.statusText}
+        // if(!res.ok) throw new Error("Ocurrio un error");
+        if(!res.ok) throw { status: res.status, statusText: res.statusText}
 
 
-//         json.forEach((el) =>{
-//             const $li = document.createElement("li");
-//             $li.innerHTML=`${el.name} -- ${el.email} -- ${el.phone}`;
-//             $fragment.appendChild($li);
-//         });
+        json.forEach((el) =>{
+            const $li = document.createElement("li");
+            $li.innerHTML=`${el.name} -- ${el.email} -- ${el.phone}`;
+            $fragment.appendChild($li);
+        });
 
-//         $fetchAsync.appendChild($fragment);
+        $fetchAsync.appendChild($fragment);
 
-//         }catch(err) {
-//             console.log(err);
-//             let message = err.statusText || "Ocurrio un error";
-//             $fetchAsync.innerHTML = `Error ${err.status}: ${message}`;
-//         }finally {
-//             console.log("Si o si se ejecutara del try catch");
-//         }
-//     }
+        }catch(err) {
+            console.log(err);
+            let message = err.statusText || "Ocurrio un error";
+            $fetchAsync.innerHTML = `Error ${err.status}: ${message}`;
+        }finally {
+            console.log("Si o si se ejecutara del try catch");
+        }
+    }
 
-//     getData();  
-// })();
+    getData();  
+})();
 
 
 // (() => {
