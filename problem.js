@@ -1,29 +1,37 @@
-function createNode(element) {
-    return document.createElement(element);
-}
+document.getElementById("btn").addEventListener("click", data);
 
-function append(parent, el) {
-  return parent.appendChild(el);
-}
 
-const ul = document.getElementById('authors');
-const url = 'https://randomuser.me/api/?results=10';
+function data() {
+  const $fetchAsync = document.getElementById("authors"),
+      $fragment = document.createDocumentFragment();
 
-fetch(url)
-.then((resp) => resp.json())
-.then(function(data) {
-  let authors = data.results;
-  return authors.map(function(author) {
-    let li = createNode('li');
-    let img = createNode('img');
-    let span = createNode('span');
-    img.src = author.picture.medium;
-    span.innerHTML = `${author.name.first} ${author.name.last}`;
-    append(li, img);
-    append(li, span);
-    append(ul, li);
-  })
-})
-.catch(function(error) {
-  console.log(error);
-});
+  async function getData() {
+      try {
+      let res = await fetch("https://jsonplaceholder.typicode.com/users"),
+      json = await res.json();
+
+      console.log(res, json);
+
+      // if(!res.ok) throw new Error("Ocurrio un error");
+      if(!res.ok) throw { status: res.status, statusText: res.statusText}
+
+
+      json.forEach((el) =>{
+          const $li = document.createElement("li");
+          $li.innerHTML=`${el.name} -- ${el.email} -- ${el.phone}`;
+          $fragment.appendChild($li);
+      });
+
+      $fetchAsync.appendChild($fragment);
+
+      }catch(err) {
+          console.log(err);
+          let message = err.statusText || "Ocurrio un error";
+          $fetchAsync.innerHTML = `Error ${err.status}: ${message}`;
+      }finally {
+          console.log("Si o si se ejecutara del try catch");
+      }
+  }
+
+  getData();  
+};
